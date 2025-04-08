@@ -1,7 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; // ✅ Needed for navigation
 import "./page.css";
 
-const Home: React.FC = () => {
+const LandingPage: React.FC = () => {
+  const navigate = useNavigate(); // ✅ Initialize navigation
+
   return (
     <div className="home-container">
       {/* Navbar */}
@@ -23,10 +26,10 @@ const Home: React.FC = () => {
         <p>
           Organize, track, and manage your product data with ease using Listora.
         </p>
-        <button className="browse-button">Get Started</button>
-        <p className="creator">
-            Created by : Lakshya Bansal
-        </p>
+        <button className="browse-button" onClick={() => navigate("/home")}>
+          Get Started
+        </button>
+        <p className="creator">Created by : Lakshya Bansal</p>
       </header>
 
       {/* Features Section */}
@@ -82,7 +85,9 @@ const Home: React.FC = () => {
         </div>
         <div className="benefit-box">
           <h4>Open for Expansion</h4>
-          <p>Add new features like analytics, exporting, or AI assistants anytime.</p>
+          <p>
+            Add new features like analytics, exporting, or AI assistants anytime.
+          </p>
         </div>
       </section>
 
@@ -96,4 +101,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default LandingPage;

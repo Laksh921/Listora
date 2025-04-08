@@ -8,12 +8,12 @@ const Navbar: React.FC = () => {
         <h1 className="logo">Listora</h1>
       </div>
       <div className="navbar-center">
-        <a href="/" className="nav-link">Home</a>
+        <a href="/home" className="nav-link">Home</a>
         <a href="/products" className="nav-link">Products</a>
-        <a href="/add-product" className="nav-link">Add Product</a>
+        <a href="/add" className="nav-link">Add Product</a>
       </div>
       <div className="navbar-right">
-        <button className="signup-btn">Sign Up</button>
+        <button className="logOut-btn">Log Out</button>
       </div>
     </nav>
   );

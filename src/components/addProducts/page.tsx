@@ -1,34 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import "./page.css";
 
 const AddProduct = () => {
-  const [form, setForm] = useState({
-    name: '',
-    category: '',
-    price: '',
-    rating: '',
-  });
+    const [product, setProduct] = useState<{
+        name: string;
+        category: string;
+        quantity: string;
+        price: string;
+        description: string;
+        image: File | null;
+      }>({
+        name: "",
+        category: "",
+        quantity: "",
+        price: "",
+        description: "",
+        image: null,
+      });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setProduct((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setProduct((prev) => ({ ...prev, image: e.target.files![0] }));
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(form);
-    alert('Product added (not really, just dummy)');
+    console.log("Product to submit:", product);
+    // Integrate your backend API call here
   };
 
   return (
-    <section className="p-6 max-w-xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Add Product</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input name="name" value={form.name} onChange={handleChange} placeholder="Name" className="w-full p-2 border rounded" />
-        <input name="category" value={form.category} onChange={handleChange} placeholder="Category" className="w-full p-2 border rounded" />
-        <input name="price" value={form.price} onChange={handleChange} placeholder="Price" className="w-full p-2 border rounded" />
-        <input name="rating" value={form.rating} onChange={handleChange} placeholder="Rating" className="w-full p-2 border rounded" />
-        <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded">Submit</button>
+    <div className="add-product-container">
+      <h2 className="form-title">Add New Product</h2>
+      <form className="product-form" onSubmit={handleSubmit}>
+        <input type="text" name="name" placeholder="Product Name" required onChange={handleChange} />
+        <input type="text" name="category" placeholder="Category" required onChange={handleChange} />
+        <input type="number" name="quantity" placeholder="Quantity" required onChange={handleChange} />
+        <input type="number" name="price" placeholder="Price (₹)" required onChange={handleChange} />
+        <textarea name="description" placeholder="Description" rows={4} onChange={handleChange}></textarea>
+        <input type="file" accept="image/*" onChange={handleImageChange} />
+
+        <button type="submit">Add Product</button>
       </form>
-    </section>
+    </div>
   );
 };
 

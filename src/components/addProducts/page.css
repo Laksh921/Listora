@@ -1,0 +1,52 @@
+.add-product-container {
+    padding: 40px;
+    background-color: #fdfdfd;
+    font-family: "Segoe UI", sans-serif;
+    min-height: 100vh;
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .form-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #333;
+  }
+  
+  .product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .product-form input[type="text"],
+  .product-form input[type="number"],
+  .product-form textarea,
+  .product-form input[type="file"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+  }
+  
+  .product-form textarea {
+    resize: vertical;
+  }
+  
+  .product-form button {
+    padding: 12px;
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .product-form button:hover {
+    background-color: #4338ca;
+  }
+  
