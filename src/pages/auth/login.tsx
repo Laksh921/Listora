@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../../api';
+import { supabase } from '../../supabaseClient';
+import './login.css';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,24 +14,47 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const res = await loginUser(form);
-      const responseData = res.data as { token: string };
-      localStorage.setItem('token', responseData.token);
-      navigate('/');
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Login failed');
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email: form.email,
+      password: form.password,
+    });
+
+    if (error) {
+      setError(error.message);
+    } else {
+      navigate('/home');
     }
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto">
-      <h2 className="text-2xl mb-4 font-bold">Login</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Email" className="w-full p-2 border rounded" required />
-        <input name="password" type="password" value={form.password} onChange={handleChange} placeholder="Password" className="w-full p-2 border rounded" required />
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded w-full">Login</button>
+    <div className="login-container">
+      <form className="login-form" onSubmit={handleSubmit}>
+        <h2 className="login-title">Welcome Back</h2>
+        <input
+          type="email"
+          name="email"
+          placeholder="Email Address"
+          value={form.email}
+          onChange={handleChange}
+          className="login-input"
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={form.password}
+          onChange={handleChange}
+          className="login-input"
+          required
+        />
+        {error && <p className="login-error">{error}</p>}
+        <button type="submit" className="login-button">Login</button>
+        <p className="login-signup-redirect">
+          Don’t have an account?{' '}
+          <span className="login-link" onClick={() => navigate('/signup')}>Sign up</span>
+        </p>
       </form>
     </div>
   );

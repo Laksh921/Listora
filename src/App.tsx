@@ -1,57 +1,46 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Layout from './Layout'; // Your layout that includes Navbar
+import Layout from './Layout';
 import LandingPage from './components/LandingPage/page';
 import Home from './components/Home/page';
-import ProductList from './components/ProductList/page';
 import AddProduct from './components/addProducts/page';
-import EditProduct from './components/editProduct/page';
 import Product from './components/products/page';
+import Login from './pages/auth/login';
+import Signup from './pages/auth/signup';
+import PrivateRoute from './pages/auth/privateRoute';
 
 const App = () => {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800">
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
 
+        {/* Protected Routes */}
         <Route
           path="/home"
           element={
-            <Layout>
-              <Home />
-            </Layout>
-          }
-        />
-        <Route
-          path="/productList"
-          element={
-            <Layout>
-              <ProductList />
-            </Layout>
+            <PrivateRoute>
+              <Layout><Home /></Layout>
+            </PrivateRoute>
           }
         />
         <Route
           path="/add"
           element={
-            <Layout>
-              <AddProduct />
-            </Layout>
+            <PrivateRoute>
+              <Layout><AddProduct /></Layout>
+            </PrivateRoute>
           }
         />
         <Route
           path="/products"
           element={
-            <Layout>
-              <Product />
-            </Layout>
-          }
-        />
-        <Route
-          path="/edit/:id"
-          element={
-            <Layout>
-              <EditProduct />
-            </Layout>
+            <PrivateRoute>
+              <Layout><Product /></Layout>
+            </PrivateRoute>
           }
         />
       </Routes>

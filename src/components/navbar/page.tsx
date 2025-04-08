@@ -1,7 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../../supabaseClient";
 import "./page.css";
 
 const Navbar: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/");
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -13,7 +22,7 @@ const Navbar: React.FC = () => {
         <a href="/add" className="nav-link">Add Product</a>
       </div>
       <div className="navbar-right">
-        <button className="logOut-btn">Log Out</button>
+        <button className="logOut-btn" onClick={handleLogout}>Log Out</button>
       </div>
     </nav>
   );

@@ -1,24 +1,26 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // ✅ Needed for navigation
+import { useNavigate } from "react-router-dom";
 import "./page.css";
 
 const LandingPage: React.FC = () => {
-  const navigate = useNavigate(); // ✅ Initialize navigation
+  const navigate = useNavigate();
 
   return (
     <div className="home-container">
-      {/* Navbar */}
       <nav className="landing-navbar">
         <div className="navbar-left">
           <h2 className="logo">Listora</h2>
         </div>
         <div className="navbar-right">
-          <button className="nav-btn">Login</button>
-          <button className="nav-btn signup">Signup</button>
+          <button className="nav-btn" onClick={() => navigate('/login')}>
+            Login
+          </button>
+          <button className="nav-btn signup" onClick={() => navigate('/signup')}>
+            Signup
+          </button>
         </div>
       </nav>
 
-      {/* Hero Header */}
       <header className="hero-content">
         <h1>
           <span className="highlight">Product Management</span> made simple.
@@ -32,7 +34,6 @@ const LandingPage: React.FC = () => {
         <p className="creator">Created by : Lakshya Bansal</p>
       </header>
 
-      {/* Features Section */}
       <section className="illustration-section">
         <div className="info-box">
           <h2>Easily manage all your products in one place</h2>
@@ -66,7 +67,6 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Benefits Section */}
       <section className="benefits">
         <div className="benefit-box">
           <h4>Fast and Lightweight</h4>
@@ -91,11 +91,12 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      <button className="browse-button">Browse Now</button>
+      <button className="browse-button" onClick={() => navigate("/home")}>
+        Browse Now
+      </button>
 
       <footer className="footer">
         <p>© 2025 Listora. All rights reserved.</p>
-        <p>Made with ❤️</p>
       </footer>
     </div>
   );
