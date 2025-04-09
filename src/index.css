@@ -12,7 +12,6 @@ body {
   padding: 20px;
 }
 
-/* Main heading */
 .main-title {
   text-align: center;
   font-size: 2.5rem;
@@ -20,7 +19,6 @@ body {
   color: #2c3e50;
 }
 
-/* Grid container for products */
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -29,7 +27,6 @@ body {
   margin: 0 auto;
 }
 
-/* Product Card */
 .product-card {
   background: white;
   padding: 16px;

@@ -80,7 +80,6 @@
   color: white;
 }
 
-/* Modal styling */
 .modal {
   position: fixed;
   top: 0;
@@ -164,4 +163,39 @@
 
 .modal-buttons button:last-child:hover {
   background-color: #e2e2e2;
+}
+
+.filter-bar {
+  margin-bottom: 1.5rem;
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.filter-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.filter-fields input {
+  padding: 0.5rem;
+  width: 150px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.filter-fields button {
+  padding: 0.5rem 1rem;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.filter-fields button:hover {
+  background-color: #005fa3;
 }

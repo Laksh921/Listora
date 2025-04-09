@@ -11,6 +11,7 @@ const AddProduct = () => {
     category: string;
     quantity: string;
     price: string;
+    rating: string;
     description: string;
     image: File | null;
   }>({
@@ -18,6 +19,7 @@ const AddProduct = () => {
     category: "",
     quantity: "",
     price: "",
+    rating: "",
     description: "",
     image: null,
   });
@@ -67,12 +69,14 @@ const AddProduct = () => {
       } = await supabase.auth.getUser();
 
       if (userError || !user) throw new Error("User not authenticated");
+
       const { error: insertError } = await supabase.from("products").insert([
         {
           name: product.name,
           category: product.category,
           quantity: parseInt(product.quantity),
           price: parseFloat(product.price),
+          rating: parseFloat(product.rating),
           description: product.description,
           image_url: imageUrl,
           user_id: user.id,
@@ -82,7 +86,7 @@ const AddProduct = () => {
       if (insertError) throw insertError;
 
       alert("Product added successfully!");
-      navigate("/products"); 
+      navigate("/products");
     } catch (err: any) {
       setError(err.message || "Something went wrong");
       alert(err.message || "Something went wrong");
@@ -120,6 +124,16 @@ const AddProduct = () => {
           type="number"
           name="price"
           placeholder="Price (₹)"
+          required
+          onChange={handleChange}
+        />
+        <input
+          type="number"
+          name="rating"
+          placeholder="Rating (1 to 5)"
+          min="1"
+          max="5"
+          step="0.1"
           required
           onChange={handleChange}
         />

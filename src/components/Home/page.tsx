@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Package, Tag, Clock } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import "./page.css";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+
   const [userName, setUserName] = useState("");
+  const [userId, setUserId] = useState("");
   const [totalProducts, setTotalProducts] = useState(0);
   const [categories, setCategories] = useState<string[]>([]);
   const [recentProducts, setRecentProducts] = useState<any[]>([]);
+  const [feedback, setFeedback] = useState("");
+  const [feedbackStatus, setFeedbackStatus] = useState("");
 
   const fetchDashboardData = async () => {
     const {
@@ -17,6 +23,7 @@ const Dashboard = () => {
 
     if (userError || !user) return;
 
+    setUserId(user.id);
     setUserName(user.user_metadata?.full_name || user.email);
 
     const { data: products, error: productError } = await supabase
@@ -40,15 +47,37 @@ const Dashboard = () => {
     }
   };
 
+  const handleFeedbackSubmit = async () => {
+    if (!feedback.trim()) {
+      setFeedbackStatus("Please write something before submitting.");
+      return;
+    }
+
+    const { error } = await supabase.from("feedbacks").insert([
+      {
+        user_id: userId,
+        feedback: feedback.trim(),
+      },
+    ]);
+
+    if (error) {
+      setFeedbackStatus("Error submitting feedback.");
+      console.error(error.message);
+    } else {
+      setFeedbackStatus("✅ Feedback submitted successfully!");
+      setFeedback("");
+    }
+
+    setTimeout(() => setFeedbackStatus(""), 3000);
+  };
+
   useEffect(() => {
     fetchDashboardData();
   }, []);
 
   return (
     <div className="dashboard-container">
-      <h1 className="dashboard-heading">
-        Welcome back, <span className="text-blue">{userName?.split(" ")[0]}</span> 👋
-      </h1>
+      <h1 className="dashboard-heading">Welcome back 👋</h1>
       <p className="dashboard-subheading">
         Here’s a quick snapshot of your inventory!
       </p>
@@ -72,9 +101,12 @@ const Dashboard = () => {
       </div>
 
       <div className="flex-buttons">
-        <button className="manage-button">📦 Manage Products</button>
-        <button className="manage-button green">➕ Add Product</button>
-        <button className="manage-button yellow">🗂️ Add Category</button>
+        <button className="manage-button" onClick={() => navigate("/products")}>
+          📦 Manage Products
+        </button>
+        <button className="manage-button green" onClick={() => navigate("/add")}>
+          ➕ Add Product
+        </button>
       </div>
 
       <div className="summary-card">
@@ -85,17 +117,34 @@ const Dashboard = () => {
         {recentProducts.length === 0 ? (
           <p className="summary-empty">No recent products found.</p>
         ) : (
-          <ul className="summary-list">
+          <div className="recent-products-grid">
             {recentProducts.map((product) => (
-              <li key={product.id}>
-                <div className="flex-space-between">
-                  <span className="text-bold">{product.name}</span>
-                  <span className="text-muted">{product.quantity} in stock</span>
+              <div key={product.id} className="product-card">
+                {product.image_url ? (
+                  <img
+                    src={product.image_url}
+                    alt={product.name}
+                    className="product-image"
+                  />
+                ) : (
+                  <div className="image-placeholder">No Image</div>
+                )}
+                <div className="product-details">
+                  <h4 className="product-name">{product.name}</h4>
+                  <p className="product-meta">
+                    {product.category} | ₹{product.price}
+                  </p>
+                  <p className="product-stock">{product.quantity} in stock</p>
                 </div>
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
+        <div style={{ marginTop: "1rem" }}>
+          <button className="manage-button" onClick={() => navigate("/products")}>
+            View All Products
+          </button>
+        </div>
       </div>
 
       <div className="summary-card">
@@ -103,10 +152,17 @@ const Dashboard = () => {
         <textarea
           className="feedback-box"
           placeholder="Suggest features or improvements..."
+          value={feedback}
+          onChange={(e) => setFeedback(e.target.value)}
         />
-        <button className="manage-button" style={{ marginTop: "1rem" }}>
+        <button
+          className="manage-button"
+          style={{ marginTop: "1rem" }}
+          onClick={handleFeedbackSubmit}
+        >
           Submit Feedback
         </button>
+        {feedbackStatus && <p className="feedback-status">{feedbackStatus}</p>}
       </div>
     </div>
   );

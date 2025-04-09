@@ -13,12 +13,10 @@ const App = () => {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800">
       <Routes>
-        {/* Public Routes */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        {/* Protected Routes */}
         <Route
           path="/home"
           element={
