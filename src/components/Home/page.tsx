@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Package, Tag, Clock } from "lucide-react";
 import { supabase } from "../../supabaseClient";
@@ -77,7 +77,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <h1 className="dashboard-heading">Welcome back 👋</h1>
+      <h1 className="dashboard-heading">Welcome back {userName ? `${userName} 👋` : "👋"}</h1>
       <p className="dashboard-subheading">
         Here’s a quick snapshot of your inventory!
       </p>

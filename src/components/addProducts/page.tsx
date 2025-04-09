@@ -50,7 +50,7 @@ const AddProduct = () => {
       if (product.image) {
         const fileExt = product.image.name.split(".").pop();
         const fileName = `${Date.now()}.${fileExt}`;
-        const { data: imageData, error: imageError } = await supabase.storage
+        const {error: imageError } = await supabase.storage
           .from("product-images")
           .upload(fileName, product.image);
 
