@@ -1,54 +1,111 @@
-# React + TypeScript + Vite
+# 📋 Listora – Task Management App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Listora** is a modern and lightweight task manager built with React, TypeScript, and Supabase. It helps users manage to-dos efficiently with a minimal and responsive UI.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- ✅ Create, edit, and delete tasks
+- 🗂️ Filter tasks based on categories
+- ☁️ Real-time data sync with Supabase
+- ⚡ Lightning-fast development with Vite
+- 🎨 Clean and responsive design
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🛠 Tech Stack
+
+| Layer        | Tech Used              |
+|--------------|------------------------|
+| Frontend     | React, TypeScript      |
+| Build Tool   | Vite                   |
+| Backend      | Supabase (BaaS)        |
+| Styling      | CSS                    |
+| Package Mgr  | npm                    |
+
+---
+
+## ⚙️ Project Setup (Full Instructions)
+
+### 1. 📦 Clone the Repository
+
+```bash
+git clone https://github.com/your-username/Listora.git
+cd Listora
+````
+### 2. 📁 Install Dependencies
+
+```bash
+Make sure Node.js and npm are installed. Then run:
+
+bash
+Copy
+Edit
+npm install
 ```
+### 3. 🧪 Setup Supabase
+   
+```bash
+Go to https://supabase.com and sign in.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Create a new project.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+In your Supabase project:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+Go to Settings > API
+
+Copy the Project URL
+
+Copy the anon public API key
 ```
+### 4. 🛠️ Create .env File
+```bash
+In the root folder, create a file called .env and paste the following:
+
+env
+Copy
+Edit
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key
+Replace with your actual Supabase values.
+```
+### 5. 🚀 Run the App Locally
+   ```bash
+bash
+Copy
+Edit
+npm run dev
+Visit the app in your browser:
+
+arduino
+Copy
+Edit
+http://localhost:5173
+```
+## 📁 Folder Structure
+```bash
+bash
+Copy
+Edit
+Listora/
+├── public/                     # Static assets
+│   └── vite.svg
+├── src/
+│   ├── api/                    # Supabase queries
+│   │   └── index.ts
+│   ├── assets/                 # Images/icons
+│   ├── components/             # Pages/.tsx and .css files 
+│   ├── lib/
+│   ├── pages/                  # Login and Signup pages
+│   ├── routes/     
+│   ├── App.tsx                 # Main application
+│   ├── Layout.tsx              # Reusable layout
+│   ├── main.tsx                # App entry point
+│   ├── supabaseClient.ts       # Supabase init
+│   ├── App.css, index.css      # Styling
+├── .gitignore
+├── index.html
+├── package.json
+├── tsconfig.json
+├── vite.config.ts     
